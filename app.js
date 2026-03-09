@@ -1,87 +1,79 @@
-const timer = document.getElementById("timer")
+const timerEl = document.getElementById("timer");
+const clockEl = document.getElementById("clock");
+const themeToggle = document.getElementById("themeToggle");
 
-const startBtn = document.getElementById("start")
-const pauseBtn = document.getElementById("pause")
-const resetBtn = document.getElementById("reset")
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-const clock = document.getElementById("clock")
+let totalSeconds = 25 * 60;
+let timeLeft = totalSeconds;
+let intervalId = null;
+let isRunning = false;
 
-const themeToggle = document.getElementById("themeToggle")
-
-let time = 25 * 60
-
-let interval = null
-
-function render(){
-
-let m = Math.floor(time / 60)
-
-let s = time % 60
-
-timer.textContent =
-String(m).padStart(2,"0") + ":" +
-String(s).padStart(2,"0")
-
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-render()
-
-startBtn.onclick = () => {
-
-if(interval) return
-
-interval = setInterval(()=>{
-
-if(time > 0){
-
-time--
-
-render()
-
+function renderTimer() {
+  timerEl.textContent = formatTime(timeLeft);
+  document.title = `${formatTime(timeLeft)} • Pomodoro`;
 }
 
-},1000)
+function startTimer() {
+  if (isRunning) return;
 
+  isRunning = true;
+
+  intervalId = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft -= 1;
+      renderTimer();
+    } else {
+      clearInterval(intervalId);
+      intervalId = null;
+      isRunning = false;
+    }
+  }, 1000);
 }
 
-pauseBtn.onclick = () => {
+function pauseTimer() {
+  if (!isRunning) return;
 
-clearInterval(interval)
-
-interval = null
-
+  clearInterval(intervalId);
+  intervalId = null;
+  isRunning = false;
 }
 
-resetBtn.onclick = () => {
-
-clearInterval(interval)
-
-interval = null
-
-time = 25 * 60
-
-render()
-
+function resetTimer() {
+  clearInterval(intervalId);
+  intervalId = null;
+  isRunning = false;
+  timeLeft = totalSeconds;
+  renderTimer();
 }
 
-/* CLOCK */
-
-function updateClock(){
-
-const now = new Date()
-
-clock.textContent = now.toLocaleTimeString("tr-TR")
-
+function updateClock() {
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 }
 
-setInterval(updateClock,1000)
-
-updateClock()
-
-/* DARK MODE */
-
-themeToggle.onclick = () => {
-
-document.body.classList.toggle("dark")
-
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 }
+
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
+themeToggle.addEventListener("click", toggleTheme);
+
+renderTimer();
+updateClock();
+setInterval(updateClock, 1000);
