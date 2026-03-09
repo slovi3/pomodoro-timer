@@ -204,7 +204,6 @@ body {
   z-index: 2;
 }
 
-/* Dark mode */
 body.dark {
   --bg-1: #151934;
   --bg-2: #0d1124;
