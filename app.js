@@ -1,78 +1,87 @@
-const timerEl = document.getElementById("timer");
-const clockEl = document.getElementById("clock");
-const themeToggle = document.getElementById("themeToggle");
+const timer = document.getElementById("timer")
 
-const startBtn = document.getElementById("start");
-const pauseBtn = document.getElementById("pause");
-const resetBtn = document.getElementById("reset");
+const startBtn = document.getElementById("start")
+const pauseBtn = document.getElementById("pause")
+const resetBtn = document.getElementById("reset")
 
-let totalSeconds = 25 * 60;
-let timeLeft = totalSeconds;
-let intervalId = null;
-let isRunning = false;
+const clock = document.getElementById("clock")
 
-function formatTime(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+const themeToggle = document.getElementById("themeToggle")
+
+let time = 25 * 60
+
+let interval = null
+
+function render(){
+
+let m = Math.floor(time / 60)
+
+let s = time % 60
+
+timer.textContent =
+String(m).padStart(2,"0") + ":" +
+String(s).padStart(2,"0")
+
 }
 
-function renderTimer() {
-  timerEl.textContent = formatTime(timeLeft);
-  document.title = `${formatTime(timeLeft)} • Pomodoro`;
+render()
+
+startBtn.onclick = () => {
+
+if(interval) return
+
+interval = setInterval(()=>{
+
+if(time > 0){
+
+time--
+
+render()
+
 }
 
-function startTimer() {
-  if (isRunning) return;
+},1000)
 
-  isRunning = true;
-
-  intervalId = setInterval(() => {
-    if (timeLeft > 0) {
-      timeLeft -= 1;
-      renderTimer();
-    } else {
-      clearInterval(intervalId);
-      intervalId = null;
-      isRunning = false;
-    }
-  }, 1000);
 }
 
-function pauseTimer() {
-  if (!isRunning) return;
+pauseBtn.onclick = () => {
 
-  clearInterval(intervalId);
-  intervalId = null;
-  isRunning = false;
+clearInterval(interval)
+
+interval = null
+
 }
 
-function resetTimer() {
-  clearInterval(intervalId);
-  intervalId = null;
-  isRunning = false;
-  timeLeft = totalSeconds;
-  renderTimer();
+resetBtn.onclick = () => {
+
+clearInterval(interval)
+
+interval = null
+
+time = 25 * 60
+
+render()
+
 }
 
-function updateClock() {
-  const now = new Date();
-  clockEl.textContent = now.toLocaleTimeString("tr-TR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  });
+/* CLOCK */
+
+function updateClock(){
+
+const now = new Date()
+
+clock.textContent = now.toLocaleTimeString("tr-TR")
+
 }
 
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
-});
+setInterval(updateClock,1000)
 
-startBtn.addEventListener("click", startTimer);
-pauseBtn.addEventListener("click", pauseTimer);
-resetBtn.addEventListener("click", resetTimer);
+updateClock()
 
-renderTimer();
-updateClock();
-setInterval(updateClock, 1000);
+/* DARK MODE */
+
+themeToggle.onclick = () => {
+
+document.body.classList.toggle("dark")
+
+}

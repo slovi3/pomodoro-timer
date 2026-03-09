@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pomodoro Timer</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pomodoro Timer</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-  <div class="top-left">
-    <span id="clock">00:00:00</span>
-    <small>TR Time</small>
-  </div>
 
-  <div class="top-right">
-    <button id="themeToggle" class="theme-btn" type="button">🌙</button>
-  </div>
+<div class="top-left">
+<span id="clock">00:00:00</span>
+<small>TR TIME</small>
+</div>
 
-  <main class="container">
-    <p class="subtitle">You're building a tomorrow, start today</p>
+<div class="top-right">
+<button id="themeToggle">🌙</button>
+</div>
 
-    <div id="timer" class="timer">25:00</div>
+<main class="container">
 
-    <div class="controls">
-      <button id="start" class="primary" type="button">Start</button>
-      <button id="pause" type="button">Pause</button>
-      <button id="reset" type="button">Reset</button>
-    </div>
-  </main>
+<p class="subtitle">You're building tomorrow, start today</p>
 
-  <div class="bottom-right">
-    <span>stay focused ✦</span>
-  </div>
+<div class="timer" id="timer">
+25:00
+</div>
 
-  <script src="app.js"></script>
+<div class="controls">
+
+<button id="start" class="primary">Start</button>
+<button id="pause">Pause</button>
+<button id="reset">Reset</button>
+
+</div>
+
+</main>
+
+<div class="bottom-right">
+stay focused ✦
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
