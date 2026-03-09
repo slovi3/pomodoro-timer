@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pomodoro</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomodoro</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-  <div class="wrapper">
-    <div class="timer" id="timer">25:00</div>
+<div class="top-left" id="clock"></div>
 
-    <div class="controls">
-      <button id="start">Start</button>
-      <button id="pause">Pause</button>
-      <button id="reset">Reset</button>
-    </div>
-  </div>
+<div class="top-right">
+<button id="themeToggle">🌙</button>
+</div>
 
-  <script src="app.js"></script>
+<div class="container">
+
+<p class="subtitle">You're building a tomorrow, start today</p>
+
+<div class="timer" id="timer">
+25:00
+</div>
+
+<div class="controls">
+
+<button id="pause">Pause</button>
+<button id="reset">⟳</button>
+<button id="next">▶</button>
+
+</div>
+
+</div>
+
+<div class="bottom-right">
+✨ stay focused
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
