@@ -3,118 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomodoro Timer Pro</title>
+    <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-
-    <main class="app">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">07.03.2026 • Mini Project</p>
-          <h1>Pomodoro Timer Pro</h1>
-          <p class="subtext">
-            Odak, mola ve istikrarı tek ekranda takip et.
-          </p>
-        </div>
-
-        <div class="topbar-badge">
-          <span class="badge-dot"></span>
-          <span>Vanilla JS + localStorage</span>
-        </div>
-      </header>
-
-      <section class="hero-grid">
-        <div class="panel timer-panel">
-          <div class="panel-head">
-            <div>
-              <p class="panel-label">Current Mode</p>
-              <h2 id="modeLabel">Focus</h2>
-            </div>
-
-            <div class="status-chip" id="statusChip">Ready</div>
+    <main class="screen">
+      <section class="timer-shell">
+        <div class="topbar">
+          <div class="brand">
+            <span class="brand-dot"></span>
+            <span>Pomodoro Timer</span>
           </div>
 
-          <div class="timer-ring-wrap">
-            <div class="timer-ring" id="timerRing">
-              <div class="timer-inner">
-                <p class="timer-caption">Remaining</p>
-                <div id="timeDisplay" class="time-display">25:00</div>
-              </div>
-            </div>
+          <div class="top-actions">
+            <button class="ghost-icon" id="themeGhost" type="button" aria-label="Theme preview">
+              ⏺
+            </button>
           </div>
+        </div>
 
-          <div class="preset-row">
+        <div class="corner corner-left">
+          <p class="corner-label">Mode</p>
+          <h3 id="modeLabel">Focus</h3>
+          <span id="statusChip" class="status-chip">Ready</span>
+        </div>
+
+        <div class="corner corner-right">
+          <div class="mini-stat">
+            <p class="corner-label">Today</p>
+            <strong id="todaySessions">0</strong>
+          </div>
+          <div class="mini-stat">
+            <p class="corner-label">Sessions</p>
+            <strong id="totalSessions">0</strong>
+          </div>
+        </div>
+
+        <div class="center-stage">
+          <p class="eyebrow">Focus. Break. Repeat.</p>
+          <div id="timeDisplay" class="time-display">25:00</div>
+          <p id="helperText" class="helper-text">Hazır. Focus 25 ile başlayabilirsin.</p>
+        </div>
+
+        <div class="bottom-zone">
+          <div class="preset-group">
             <button class="preset-btn active" data-minutes="25" type="button">Focus 25</button>
             <button class="preset-btn" data-minutes="5" type="button">Break 5</button>
             <button class="preset-btn" data-minutes="15" type="button">Break 15</button>
           </div>
 
-          <div class="controls">
-            <button id="startBtn" class="btn btn-primary" type="button">Start</button>
-            <button id="pauseBtn" class="btn btn-secondary" type="button" disabled>Pause</button>
-            <button id="resetBtn" class="btn btn-ghost" type="button">Reset</button>
+          <div class="control-bar">
+            <button id="startBtn" class="control-btn control-btn-primary" type="button">
+              Start
+            </button>
+            <button id="pauseBtn" class="control-btn" type="button" disabled>
+              Pause
+            </button>
+            <button id="resetBtn" class="control-btn" type="button">
+              Reset
+            </button>
           </div>
 
-          <p id="helperText" class="helper-text">Hazır. İstersen Focus 25 ile başla.</p>
-        </div>
-
-        <aside class="panel side-panel">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <p class="stat-label">Completed Sessions</p>
-              <div id="totalSessions" class="stat-value">0</div>
-            </div>
-
-            <div class="stat-card">
-              <p class="stat-label">Today</p>
-              <div id="todaySessions" class="stat-value">0</div>
-            </div>
-          </div>
-
-          <div class="mini-section">
-            <div class="section-head">
-              <h3>Quick Actions</h3>
-            </div>
-
-            <div class="quick-actions">
-              <button id="addSessionBtn" class="btn btn-secondary full" type="button">
-                +1 Session Ekle
-              </button>
-              <button id="clearDataBtn" class="btn btn-danger full" type="button">
-                Tüm Veriyi Sıfırla
-              </button>
-            </div>
-          </div>
-
-          <div class="mini-section">
-            <div class="section-head">
-              <h3>How it works</h3>
-            </div>
-
-            <ul class="info-list">
-              <li>Focus oturumu bitince completed session artar.</li>
-              <li>Today sayacı günlük ayrı tutulur.</li>
-              <li>Veriler tarayıcıda localStorage ile saklanır.</li>
-            </ul>
-          </div>
-        </aside>
-      </section>
-
-      <section class="panel footer-panel">
-        <div class="footer-panel-inner">
-          <div>
-            <p class="panel-label">Ship Checklist</p>
-            <h3>Bugün proje bitti sayılma şartı</h3>
-          </div>
-
-          <div class="check-grid">
-            <div class="check-item">✅ Timer çalışıyor</div>
-            <div class="check-item">✅ Pause / Reset çalışıyor</div>
-            <div class="check-item">✅ Sayaç kaydediliyor</div>
-            <div class="check-item">✅ GitHub + Pages deploy</div>
+          <div class="extra-bar">
+            <button id="addSessionBtn" class="text-btn" type="button">+1 Session</button>
+            <button id="clearDataBtn" class="text-btn danger" type="button">Veriyi Sıfırla</button>
           </div>
         </div>
 

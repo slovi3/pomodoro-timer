@@ -1,14 +1,13 @@
 const el = (id) => document.getElementById(id);
 
-// Elements
 const timeDisplay = el("timeDisplay");
 const modeLabel = el("modeLabel");
 const statusChip = el("statusChip");
 const helperText = el("helperText");
 const toast = el("toast");
+
 const totalSessionsEl = el("totalSessions");
 const todaySessionsEl = el("todaySessions");
-const timerRing = el("timerRing");
 
 const startBtn = el("startBtn");
 const pauseBtn = el("pauseBtn");
@@ -18,12 +17,12 @@ const clearDataBtn = el("clearDataBtn");
 
 const presetButtons = document.querySelectorAll(".preset-btn");
 
-// Storage keys
+// Storage
 const LS_TOTAL = "pomodoro_pro_total_sessions";
 const LS_TODAY = "pomodoro_pro_today_sessions";
 const LS_TODAY_DATE = "pomodoro_pro_today_date";
 
-// Timer state
+// State
 let currentMode = "Focus";
 let presetMinutes = 25;
 let totalSeconds = presetMinutes * 60;
@@ -31,7 +30,6 @@ let remainingSeconds = totalSeconds;
 let intervalId = null;
 let isRunning = false;
 
-// Helpers
 function todayKey() {
   const now = new Date();
   const year = now.getFullYear();
@@ -50,28 +48,9 @@ function formatTime(seconds) {
   return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-function updateTitle() {
-  document.title = `${formatTime(remainingSeconds)} • ${currentMode}`;
-}
-
-function updateProgress() {
-  const progressRatio = (totalSeconds - remainingSeconds) / totalSeconds;
-  const deg = Math.max(0, Math.min(360, progressRatio * 360));
-  timerRing.style.setProperty("--progress", `${deg}deg`);
-}
-
 function renderTime() {
   timeDisplay.textContent = formatTime(remainingSeconds);
-  updateTitle();
-  updateProgress();
-}
-
-function syncModeLabel() {
-  modeLabel.textContent = currentMode;
-}
-
-function syncStatus(text) {
-  statusChip.textContent = text;
+  document.title = `${formatTime(remainingSeconds)} • ${currentMode}`;
 }
 
 function refreshPresetActiveState() {
@@ -79,6 +58,14 @@ function refreshPresetActiveState() {
     const mins = Number(btn.dataset.minutes);
     btn.classList.toggle("active", mins === presetMinutes);
   });
+}
+
+function syncMode() {
+  modeLabel.textContent = currentMode;
+}
+
+function syncStatus(text) {
+  statusChip.textContent = text;
 }
 
 function loadCounters() {
@@ -116,7 +103,7 @@ function stopInterval() {
 
 function setPreset(minutes) {
   if (isRunning) {
-    helperText.textContent = "Timer çalışırken preset değiştiremezsin. Önce pause ya da reset.";
+    helperText.textContent = "Timer çalışırken preset değiştiremezsin.";
     return;
   }
 
@@ -125,7 +112,7 @@ function setPreset(minutes) {
   totalSeconds = minutes * 60;
   remainingSeconds = totalSeconds;
 
-  syncModeLabel();
+  syncMode();
   refreshPresetActiveState();
   renderTime();
   syncStatus("Ready");
@@ -140,7 +127,7 @@ function onTimerComplete() {
   if (currentMode === "Focus") {
     increaseSessions();
     showToast("Focus oturumu tamamlandı. +1 session ✅");
-    helperText.textContent = "Harika. Bir session daha yazıldı.";
+    helperText.textContent = "Güzel. Bir focus oturumu daha tamamlandı.";
   } else {
     showToast("Mola tamamlandı ✅");
     helperText.textContent = "Mola bitti. Hazırsan tekrar focus başlat.";
@@ -160,7 +147,7 @@ function startTimer() {
   startBtn.disabled = true;
   pauseBtn.disabled = false;
   syncStatus("Running");
-  helperText.textContent = `${currentMode} başladı. Odak sende.`;
+  helperText.textContent = `${currentMode} başladı.`;
   showToast("");
 
   intervalId = setInterval(() => {
@@ -204,8 +191,8 @@ function clearAllData() {
   localStorage.removeItem(LS_TODAY);
   localStorage.removeItem(LS_TODAY_DATE);
   loadCounters();
-  showToast("Tüm sayaç verileri sıfırlandı.");
-  helperText.textContent = "Sayaç verileri temizlendi.";
+  helperText.textContent = "Sayaç verileri sıfırlandı.";
+  showToast("Veriler temizlendi.");
 }
 
 startBtn.addEventListener("click", startTimer);
@@ -214,8 +201,8 @@ resetBtn.addEventListener("click", resetTimer);
 
 addSessionBtn.addEventListener("click", () => {
   increaseSessions();
-  showToast("+1 session manuel eklendi.");
-  helperText.textContent = "Session sayacı manuel olarak artırıldı.";
+  helperText.textContent = "Session sayacı manuel artırıldı.";
+  showToast("+1 session");
 });
 
 clearDataBtn.addEventListener("click", clearAllData);
@@ -227,10 +214,10 @@ presetButtons.forEach((button) => {
   });
 });
 
-// Initial render
+// init
 loadCounters();
-syncModeLabel();
+syncMode();
 refreshPresetActiveState();
 syncStatus("Ready");
 renderTime();
-helperText.textContent = "Hazır. İstersen Focus 25 ile başla.";
+helperText.textContent = "Hazır. Focus 25 ile başlayabilirsin.";
