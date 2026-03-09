@@ -16,7 +16,9 @@
       <span id="clock">00:00:00</span>
     </div>
 
-    <button id="themeToggle" class="theme-btn" type="button">🌙</button>
+    <button id="themeToggle" class="theme-btn" type="button" aria-label="Tema değiştir">
+      🌙
+    </button>
   </header>
 
   <main class="app">
@@ -24,7 +26,12 @@
 
     <section class="timer-stage">
       <div class="timer-glow"></div>
-      <h1 id="timer" class="timer">25:00</h1>
+
+      <div class="progress-ring" id="progressRing">
+        <div class="progress-inner">
+          <h1 id="timer" class="timer">25:00</h1>
+        </div>
+      </div>
     </section>
 
     <section class="controls">
@@ -34,10 +41,10 @@
     </section>
 
     <section class="meta">
-  <div class="pill">Focus 25</div>
-  <div class="pill">Minimal Mode</div>
-  <div class="pill" id="sessionCount">Sessions today: 0</div>
-</section>
+      <div class="pill">Focus 25</div>
+      <div class="pill">Minimal Mode</div>
+      <div class="pill" id="sessionCount">Sessions today: 0</div>
+    </section>
   </main>
 
   <div class="bottom-note">stay focused ✦</div>

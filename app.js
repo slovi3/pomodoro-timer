@@ -2,6 +2,7 @@ const timerEl = document.getElementById("timer");
 const clockEl = document.getElementById("clock");
 const themeToggle = document.getElementById("themeToggle");
 const sessionCountEl = document.getElementById("sessionCount");
+const progressRing = document.getElementById("progressRing");
 
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
@@ -55,9 +56,16 @@ function renderSessions() {
   sessionCountEl.textContent = `Sessions today: ${sessionsToday}`;
 }
 
+function renderProgress() {
+  const ratio = (totalSeconds - timeLeft) / totalSeconds;
+  const degrees = Math.max(0, Math.min(360, ratio * 360));
+  progressRing.style.setProperty("--progress", `${degrees}deg`);
+}
+
 function renderTimer() {
   timerEl.textContent = formatTime(timeLeft);
   document.title = `${formatTime(timeLeft)} • Pomodoro`;
+  renderProgress();
 }
 
 function playFinishSound() {
@@ -87,7 +95,6 @@ function startTimer() {
       sessionsToday += 1;
       saveTodaySessions();
       renderSessions();
-
       playFinishSound();
 
       document.title = "Done • Pomodoro";

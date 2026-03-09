@@ -109,25 +109,59 @@ body {
 
 .timer-stage {
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: center;
 }
 
 .timer-glow {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: 380px;
-  height: 180px;
+  width: 420px;
+  height: 220px;
   transform: translate(-50%, -50%);
   background: radial-gradient(circle, rgba(90, 103, 255, 0.18), transparent 65%);
-  filter: blur(30px);
+  filter: blur(34px);
   z-index: 0;
 }
 
-.timer {
+.progress-ring {
+  --progress: 0deg;
+  width: min(440px, 78vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   position: relative;
+  display: grid;
+  place-items: center;
+  background:
+    conic-gradient(
+      from -90deg,
+      var(--primary) 0deg,
+      var(--primary-2) var(--progress),
+      rgba(255, 255, 255, 0.12) var(--progress),
+      rgba(255, 255, 255, 0.12) 360deg
+    );
+  box-shadow:
+    0 20px 50px rgba(90, 103, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
   z-index: 1;
+}
+
+.progress-inner {
+  width: calc(100% - 22px);
+  height: calc(100% - 22px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.08), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(10px);
+}
+
+.timer {
   margin: 0;
-  font-size: clamp(88px, 16vw, 170px);
+  font-size: clamp(72px, 13vw, 150px);
   line-height: 0.9;
   font-weight: 800;
   letter-spacing: -0.07em;
@@ -194,6 +228,10 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.pill#sessionCount {
+  font-weight: 700;
+}
+
 .bottom-note {
   position: absolute;
   right: 28px;
@@ -221,6 +259,23 @@ body.dark .timer-glow {
   background: radial-gradient(circle, rgba(141, 150, 255, 0.24), transparent 65%);
 }
 
+body.dark .progress-ring {
+  background:
+    conic-gradient(
+      from -90deg,
+      var(--primary) 0deg,
+      var(--primary-2) var(--progress),
+      rgba(255, 255, 255, 0.08) var(--progress),
+      rgba(255, 255, 255, 0.08) 360deg
+    );
+}
+
+body.dark .progress-inner {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.04), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+}
+
 @media (max-width: 640px) {
   .topbar {
     top: 16px;
@@ -236,8 +291,4 @@ body.dark .timer-glow {
   .btn {
     min-width: 92px;
   }
-}
-
-.pill#sessionCount {
-  font-weight: 700;
 }
