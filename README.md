@@ -1,5 +1,5 @@
 ## Live Demo
-https://slovi3.github.io/mini-2026-03-07-pomodoro-timer/
+https://slovi3.github.io/pomodoro-timer/
 
 # Pomodoro Timer Pro (Vanilla JS)
 
