@@ -1,78 +1,78 @@
-let time = 25 * 60
+const timerEl = document.getElementById("timer");
+const clockEl = document.getElementById("clock");
+const themeToggle = document.getElementById("themeToggle");
 
-const timer = document.getElementById("timer")
+const startBtn = document.getElementById("start");
+const pauseBtn = document.getElementById("pause");
+const resetBtn = document.getElementById("reset");
 
-function render(){
+let totalSeconds = 25 * 60;
+let timeLeft = totalSeconds;
+let intervalId = null;
+let isRunning = false;
 
-let m = Math.floor(time/60)
-let s = time % 60
-
-timer.textContent =
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0")
-
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-render()
-
-let interval
-
-document.getElementById("pause").onclick = ()=>{
-
-clearInterval(interval)
-
+function renderTimer() {
+  timerEl.textContent = formatTime(timeLeft);
+  document.title = `${formatTime(timeLeft)} • Pomodoro`;
 }
 
-document.getElementById("next").onclick = ()=>{
+function startTimer() {
+  if (isRunning) return;
 
-clearInterval(interval)
+  isRunning = true;
 
-interval = setInterval(()=>{
-
-if(time>0){
-
-time--
-render()
-
+  intervalId = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft -= 1;
+      renderTimer();
+    } else {
+      clearInterval(intervalId);
+      intervalId = null;
+      isRunning = false;
+    }
+  }, 1000);
 }
 
-},1000)
+function pauseTimer() {
+  if (!isRunning) return;
 
+  clearInterval(intervalId);
+  intervalId = null;
+  isRunning = false;
 }
 
-document.getElementById("reset").onclick = ()=>{
-
-clearInterval(interval)
-
-time = 25*60
-render()
-
+function resetTimer() {
+  clearInterval(intervalId);
+  intervalId = null;
+  isRunning = false;
+  timeLeft = totalSeconds;
+  renderTimer();
 }
 
-
-/* Türkiye Saati */
-
-function updateClock(){
-
-const now = new Date()
-
-const tr = now.toLocaleTimeString("tr-TR")
-
-document.getElementById("clock").textContent =
-tr
-
+function updateClock() {
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
 }
 
-setInterval(updateClock,1000)
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+});
 
-updateClock()
+startBtn.addEventListener("click", startTimer);
+pauseBtn.addEventListener("click", pauseTimer);
+resetBtn.addEventListener("click", resetTimer);
 
-
-/* Dark Mode */
-
-document.getElementById("themeToggle")
-.onclick=()=>{
-
-document.body.classList.toggle("dark")
-
-}
+renderTimer();
+updateClock();
+setInterval(updateClock, 1000);
