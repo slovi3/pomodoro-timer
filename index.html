@@ -1,83 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomodoro Timer</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <main class="screen">
-      <section class="timer-shell">
-        <div class="topbar">
-          <div class="brand">
-            <span class="brand-dot"></span>
-            <span>Pomodoro Timer</span>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
 
-          <div class="top-actions">
-            <button class="ghost-icon" id="themeGhost" type="button" aria-label="Theme preview">
-              ⏺
-            </button>
-          </div>
-        </div>
+  <div class="wrapper">
+    <div class="timer" id="timer">25:00</div>
 
-        <div class="corner corner-left">
-          <p class="corner-label">Mode</p>
-          <h3 id="modeLabel">Focus</h3>
-          <span id="statusChip" class="status-chip">Ready</span>
-        </div>
+    <div class="controls">
+      <button id="start">Start</button>
+      <button id="pause">Pause</button>
+      <button id="reset">Reset</button>
+    </div>
+  </div>
 
-        <div class="corner corner-right">
-          <div class="mini-stat">
-            <p class="corner-label">Today</p>
-            <strong id="todaySessions">0</strong>
-          </div>
-          <div class="mini-stat">
-            <p class="corner-label">Sessions</p>
-            <strong id="totalSessions">0</strong>
-          </div>
-        </div>
-
-        <div class="center-stage">
-          <p class="eyebrow">Focus. Break. Repeat.</p>
-          <div id="timeDisplay" class="time-display">25:00</div>
-          <p id="helperText" class="helper-text">Hazır. Focus 25 ile başlayabilirsin.</p>
-        </div>
-
-        <div class="bottom-zone">
-          <div class="preset-group">
-            <button class="preset-btn active" data-minutes="25" type="button">Focus 25</button>
-            <button class="preset-btn" data-minutes="5" type="button">Break 5</button>
-            <button class="preset-btn" data-minutes="15" type="button">Break 15</button>
-          </div>
-
-          <div class="control-bar">
-            <button id="startBtn" class="control-btn control-btn-primary" type="button">
-              Start
-            </button>
-            <button id="pauseBtn" class="control-btn" type="button" disabled>
-              Pause
-            </button>
-            <button id="resetBtn" class="control-btn" type="button">
-              Reset
-            </button>
-          </div>
-
-          <div class="extra-bar">
-            <button id="addSessionBtn" class="text-btn" type="button">+1 Session</button>
-            <button id="clearDataBtn" class="text-btn danger" type="button">Veriyi Sıfırla</button>
-          </div>
-        </div>
-
-        <p id="toast" class="toast" aria-live="polite"></p>
-      </section>
-    </main>
-
-    <script src="./app.js"></script>
-  </body>
+  <script src="app.js"></script>
+</body>
 </html>
