@@ -15,6 +15,3 @@ https://slovi3.github.io/mini-2026-03-07-pomodoro-timer/
 
 ## Çalıştırma
 `index.html` dosyasını çift tıklayarak tarayıcıda aç.
-
-## Live
-(Deploy sonrası eklenecek)
