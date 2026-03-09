@@ -237,3 +237,7 @@ body.dark .timer-glow {
     min-width: 92px;
   }
 }
+
+.pill#sessionCount {
+  font-weight: 700;
+}
